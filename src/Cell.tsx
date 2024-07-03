@@ -1,6 +1,6 @@
-import MazeSquare from "./MazeSquare";
-import { colorOfSide } from "./SideType";
-import { gridSize } from "./constants";
+import MazeSquare from "./entities/MazeSquare";
+import { colorOfSide } from "./entities/SideType";
+import { gridSize } from "./entities/constants";
 import CSS from "csstype";
 
 const Cell = ({ square }: { square: MazeSquare }) => {
@@ -35,6 +35,7 @@ const Cell = ({ square }: { square: MazeSquare }) => {
   const sides = paths.map((path, index) => ({ path, color: colors[index] }));
 
   const innerColor = square.content ? "orange" : "white";
+
   const coordinateStyle: CSS.Properties = {
     dominantBaseline: "middle",
     textAnchor: "middle",
@@ -58,6 +59,27 @@ const Cell = ({ square }: { square: MazeSquare }) => {
     );
   };
 
+  const Cross = () => {
+    return (
+      <g>
+        <line
+          x1={eastDisplay}
+          y1={northDisplay}
+          x2={westDisplay}
+          y2={southDisplay}
+          stroke="black"
+        />
+        <line
+          x1={eastDisplay}
+          y1={southDisplay}
+          x2={westDisplay}
+          y2={northDisplay}
+          stroke="black"
+        />
+      </g>
+    );
+  };
+
   return (
     <>
       <g>
@@ -71,6 +93,7 @@ const Cell = ({ square }: { square: MazeSquare }) => {
           height={innerSize}
           fill={innerColor}
         />
+        {square.content === undefined && <Cross />}
         <Coordinates />
       </g>
     </>

@@ -1,8 +1,21 @@
 When having 60 minutes saved...
+Each half hour 
+
 1. Make a new commit (clean up comments and code as you go)
-2. check all code: what is there to do?
+
+
+9. Factor out Coordinate 
+
+
+12. check all code: what is there to do? (repeat)
+
+
+// DONE 
 3. <8 files in main directory
 4. Pass the array in one go (instead of X arguments) to the target MazeManager builder
 5. handle the moveNorth and such in the strings!
 6. coordinates in cells? [?(0,2) vs (0,2)]
+11. Cross in unknown cell...
 7. Drop-down box for levels (and 10 floors!)
+8. add [#marker]and[>marker] 
+10. MazeSquare: from and fromInternal
