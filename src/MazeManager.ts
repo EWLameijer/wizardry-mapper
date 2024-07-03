@@ -39,7 +39,7 @@ class MazeManager {
       const method = directions.find(
         (direction) => direction.key === directionStart
       )!;
-      this.#moveAndBuildInternal(
+      this.#moveAndBuild(
         wn,
         es,
         contents,
@@ -89,7 +89,7 @@ class MazeManager {
     return this;
   }
 
-  #moveAndBuildInternal(
+  #moveAndBuild(
     wn: string,
     es: string,
     contents: string,
