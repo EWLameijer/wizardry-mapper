@@ -15,7 +15,6 @@ class MazeManager {
     this.#currentSquare = this.allCells.find(
       (cell) => cell.coordinate.x == 0 && cell.coordinate.y == 0
     )!;
-    //console.log("cs", this.#currentSquare);
   }
 
   build(descriptions: string) {
@@ -30,7 +29,6 @@ class MazeManager {
       { key: "w", direction: { dx: -1, dy: 0 } },
     ];
     allCells.forEach((matches) => {
-      //console.log("cs", this.#currentSquare);
       const { x, y } = this.#currentSquare.coordinate;
       let desiredLocation: GridCoordinate;
       const locationIndicator = matches[1];
@@ -44,19 +42,15 @@ class MazeManager {
         );
       } else if (locationIndicator[1] === ">") {
         const targetLabel = locationIndicator.slice(2, -1);
-        //console.log("move to", locationIndicator.slice(2, -1));
         desiredLocation = this.allCells.find(
           (cell) => cell.label === targetLabel
         )!.coordinate;
       } else {
-        //console.log(locationIndicator.match(/\[([0-9]+)E([0-9]+)N\]/));
         const [newX, newY] = locationIndicator
           .match(/\[([0-9]+)E([0-9]+)N\]/)!
           .slice(1);
         desiredLocation = new GridCoordinate(parseInt(newX), parseInt(newY));
       }
-      //console.log("desired location", desiredLocation);
-      if (matches[7]) console.log("label found:", matches[7]);
       if (!matches[2]) {
         // just move to other location
         this.moveTo(desiredLocation);
