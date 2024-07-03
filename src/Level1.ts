@@ -3,185 +3,46 @@ import SideType from "./SideType";
 
 const maze = new MazeManager();
 const start = maze.start(0, 0, `10/s=${SideType.STAIRS_UP}/`).cellCoordinates();
-maze
-  .east("44")
-  .east("44")
-  .east("44")
-  .east("44")
-  .east("44")
-  .east("44")
-  .east("84")
-  .east("45")
-  .north("05")
-  .north("41")
-  .west("40")
-  .west("50")
-  .south("14")
-  .east("08");
+maze.build("e44e44e44e44e44e44e84e45n05n41w40w50s14e08");
 const secondSplit = maze
   .moveTo(start)
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("50")
-  .east("44")
-  .east("44")
-  .east("40")
+  .build("n11n11n11n11n11n11n11n50e44e44e40")
   .cellCoordinates();
-maze
-  .south("11")
-  .south("11")
-  .south("11")
-  .south("19")
-  .south("80")
-  .east("41")
-  .south("05")
-  .west("04")
-  .west("14")
-  .north("50");
+maze.build("s11s11s11s19s80e41s05w04w14n50");
 const thirdSplit = maze
   .moveTo(secondSplit)
-  .east("44")
-  .east("44")
-  .east("40")
+  .build("e44e44e40")
   .cellCoordinates();
-maze
-  .south("19")
-  .south("80")
-  .east("41")
-  .south("05")
-  .west("04")
-  .west("14")
-  .north("50");
+maze.build("s19s80e41s05w04w14n50");
 const beforeEast = maze
   .moveTo(thirdSplit)
-  .east("44")
-  .east("46")
-  .east("25")
-  .north("10")
-  .east("04")
+  .build("e44e46e25n10e04")
   .cellCoordinates();
-const bigUp = maze.east("84").cellCoordinates();
+const bigUp = maze.build("e84").cellCoordinates();
 maze
-  .north("19")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("52")
-  .east("6C")
-  .south("95")
+  .build("n19n11n11n11n11n11n11n11n11n52e6Cs95")
   .moveNorth()
-  .east("4E")
-  .south("95:silver key;")
+  .build("e4Es95:silver key;")
   .moveNorth()
-  .east("64")
-  .east("46")
-  .east("40")
-  .east("41")
-  .south("05")
-  .west("14");
-const secondUp = maze.moveTo(bigUp).east("44").east("84").cellCoordinates();
+  .build("e64e46e40e41s05w14");
+const secondUp = maze.moveTo(bigUp).build("e44e84").cellCoordinates();
 maze
-  .north("19")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("52")
-  .east("64")
-  .east("C6")
-  .north("49")
-  .west("54")
+  .build("n19n11n11n11n11n11n11n52e64eC6n49w54")
   .moveEast()
   .moveSouth()
-
-  .east("64")
-  .east("46")
-  .east("04")
-  .east("05")
-  .north("C1")
-  .west("D0")
-  .north("5D")
-  .east("5D");
-const thirdUp = maze.moveTo(secondUp).east("44").east("84").cellCoordinates();
-maze
-  .north("19")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("11")
-  .north("52")
-  .east("64")
-  .north("54")
-  .east("49")
-  .south("86")
-  .east("2C")
-  .south("95")
-  .east("95")
-  .north("0D")
-  .north("41")
-  .west("50");
-const fourthUp = maze.moveTo(thirdUp).east("44").east("84").cellCoordinates();
-maze
-  .north("19")
-  .north("11")
-  .west("15")
-  .north("91")
-  .north("58")
-  .east("42")
-  .east("60")
-  .east("41")
-  .south("0D")
-  .south("95")
-  .west("95")
-  .north("1C")
-  .west("11");
-maze.moveTo(fourthUp).east("44").east("47");
+  .build("e64e46e04e05nC1wD0n5De5D");
+const thirdUp = maze.moveTo(secondUp).build("e44e84").cellCoordinates();
+maze.build("n19n11n11n11n11n52e64n54e49s86e2Cs95e95n0Dn41w50");
+const fourthUp = maze.moveTo(thirdUp).build("e44e84").cellCoordinates();
+maze.build("n19n11w15n91n58e42e60e41s0Ds95w95n1Cw11");
+maze.moveTo(fourthUp).build("e44e47");
 const northWest = maze
   .moveTo(beforeEast)
-  .north("01")
-  .north("01")
-  .north("41")
-  .west("10")
-  .south("10")
-  .south("00")
-  .west("44")
-  .west("44")
-  .west("44")
-  .west("84")
+  .build("n01n01n41w10s10s00w44w44w44w84")
   .cellCoordinates();
 maze
-  .north("19")
-  .east("14")
-  .east("05")
-  .north("41")
-  .west("60")
-  .west("22")
-  .north("51")
+  .build("n19e14e05n41w60w22n51")
   .moveSouth()
-  .west("42")
-  .south("05")
-  .west("14")
-  .west("05")
-  .west("04")
-  .west("14")
-  .north("50")
-  .east("80")
-  .east("41")
-  .east("10")
-  .north("01")
-  .west("44")
-  .west("58");
+  .build("w42s05w14w05w04w14n50e80e41e10n01w44w58n04w14n10e00n40w50");
 
 export default maze;

@@ -4,7 +4,6 @@ import { gridSize } from "./constants";
 import CSS from "csstype";
 
 const Cell = ({ square }: { square: MazeSquare }) => {
-  if (square.content !== undefined) console.log(square);
   const { x, y } = square.coordinate;
   const cellSize = 40;
   const insetSize = 4;
@@ -24,66 +23,56 @@ const Cell = ({ square }: { square: MazeSquare }) => {
 
   const innerSize = cellSize - 2 * insetSize;
 
-  const northPath = `M ${westDisplay} ${northDisplay} h ${cellSize} l -${insetSize} +${insetSize} h -${innerSize}`;
-  const northColor = colorOfSide(square.sides[0]);
+  const paths = [
+    `M ${westDisplay} ${northDisplay} h ${cellSize} l -${insetSize} +${insetSize} h -${innerSize}`,
+    `M ${eastDisplay} ${northDisplay} v ${cellSize} l -${insetSize} -${insetSize} v -${innerSize}`,
+    `M ${westDisplay} ${southDisplay} h ${cellSize} l -${insetSize} -${insetSize} h -${innerSize}`,
+    `M ${westDisplay} ${northDisplay} v ${cellSize} l ${insetSize} -${insetSize} v -${innerSize}`,
+  ];
 
-  const eastPath = `M ${eastDisplay} ${northDisplay} v ${cellSize} l -${insetSize} -${insetSize} v -${innerSize}`;
-  const eastColor = colorOfSide(square.sides[1]);
+  const colors = square.sides.map(colorOfSide);
 
-  const southPath = `M ${westDisplay} ${southDisplay} h ${cellSize} l -${insetSize} -${insetSize} h -${innerSize}`;
-  const southColor = colorOfSide(square.sides[2]);
+  const sides = paths.map((path, index) => ({ path, color: colors[index] }));
 
-  const westPath = `M ${westDisplay} ${northDisplay} v ${cellSize} l ${insetSize} -${insetSize} v -${innerSize}`;
-  const westColor = colorOfSide(square.sides[3]);
-
-  const innerColor =
-    square.content === undefined
-      ? "gray"
-      : square.content == ""
-      ? "white"
-      : "orange";
-  if (square.content !== undefined) {
-    //debugger;
-  }
-
-  const questionMarkStyle: CSS.Properties = {
+  const innerColor = square.content ? "orange" : "white";
+  const coordinateStyle: CSS.Properties = {
     dominantBaseline: "middle",
     textAnchor: "middle",
     fill: "black",
-    font: "20px serif",
+    font: "12px serif",
   };
 
-  const QuestionMark = () => {
+  const Coordinates = () => {
+    const xCenter = (eastDisplay + westDisplay) / 2;
+    const yCenter = (northDisplay + southDisplay) / 2;
+    const yOffset = 6;
     return (
-      <text
-        x={(eastDisplay + westDisplay) / 2}
-        y={(northDisplay + southDisplay) / 2}
-        style={questionMarkStyle}
-      >
-        ?
-      </text>
+      <g>
+        <text x={xCenter} y={yCenter - yOffset} style={coordinateStyle}>
+          {x}E
+        </text>
+        <text x={xCenter} y={yCenter + yOffset} style={coordinateStyle}>
+          {y}N
+        </text>
+      </g>
     );
   };
 
   return (
     <>
-      {square.content === undefined ? (
-        <QuestionMark />
-      ) : (
-        <g>
-          <path d={northPath} fill={northColor} />
-          <path d={eastPath} fill={eastColor} />
-          <path d={southPath} fill={southColor} />
-          <path d={westPath} fill={westColor} />
-          <rect
-            x={westDisplay + insetSize}
-            y={northDisplay + insetSize}
-            width={innerSize}
-            height={innerSize}
-            fill={innerColor}
-          />
-        </g>
-      )}
+      <g>
+        {sides.map(({ path, color }) => (
+          <path key={path} d={path} fill={color} />
+        ))}
+        <rect
+          x={westDisplay + insetSize}
+          y={northDisplay + insetSize}
+          width={innerSize}
+          height={innerSize}
+          fill={innerColor}
+        />
+        <Coordinates />
+      </g>
     </>
   );
 };

@@ -8,6 +8,42 @@ class MazeSquare {
     public content: string | undefined = undefined
   ) {}
 
+  static fromInternal(
+    x: number,
+    y: number,
+    westNorthCodeAsString: string,
+    eastSouthCodeAsString: string,
+    squareContents: string,
+    specialDirection: string,
+    directionDescription: string
+  ) {
+    const westNorthCode = parseInt(westNorthCodeAsString, 16);
+    const westCode = westNorthCode % 4;
+    const northCode = Math.floor(westNorthCode / 4);
+
+    const eastSouthCode = parseInt(eastSouthCodeAsString, 16);
+    const eastCode = eastSouthCode % 4;
+    const southCode = Math.floor(eastSouthCode / 4);
+
+    const sides = [northCode, eastCode, southCode, westCode].map(
+      (code) => sideFromCode[code]
+    );
+    const contents = squareContents ?? "";
+
+    if (specialDirection) {
+      const sideIndex =
+        specialDirection == "n"
+          ? 0
+          : specialDirection == "e"
+          ? 1
+          : specialDirection == "s"
+          ? 2
+          : 3;
+      sides[sideIndex] = directionDescription;
+    }
+    return new MazeSquare(new GridCoordinate(x, y), sides, contents);
+  }
+
   static from(x: number, y: number, squareDescription: string) {
     // [0-F][0-F]
     // [0-F][0-F]:silver key;/n=bear door/
@@ -26,7 +62,6 @@ class MazeSquare {
       specialDirection,
       directionDescription,
     ] = squareDescription.match(matcher)!.slice(1);
-    console.log("matches", squareDescription.match(matcher));
 
     const westNorthCode = parseInt(westNorthCodeAsString, 16);
     const westCode = westNorthCode % 4;
@@ -39,20 +74,9 @@ class MazeSquare {
     const sides = [northCode, eastCode, southCode, westCode].map(
       (code) => sideFromCode[code]
     );
-    // console.log(
-    //   squareDescription,
-    //   [northCode, eastCode, southCode, westCode],
-    //   sides
-    // );
     const contents = squareContents ?? "";
 
     if (specialDirection) {
-      console.log(
-        "In the",
-        specialDirection,
-        "of the square is a",
-        directionDescription
-      );
       const sideIndex =
         specialDirection == "n"
           ? 0

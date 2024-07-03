@@ -14,7 +14,7 @@ const colors = {
   [SideType.SECRET_DOOR]: "purple",
   [SideType.STAIRS_DOWN]: "red",
   [SideType.STAIRS_UP]: "green",
-  [SideType.UNKNOWN]: "gray",
+  [SideType.UNKNOWN]: "white",
   [SideType.WALL]: "black",
 };
 
