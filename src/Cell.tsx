@@ -34,7 +34,8 @@ const Cell = ({ square }: { square: MazeSquare }) => {
 
   const sides = paths.map((path, index) => ({ path, color: colors[index] }));
 
-  const innerColor = square.content ? "orange" : "white";
+  const innerColor =
+    square.content == "d" ? "lightgrey" : square.content ? "orange" : "white";
 
   const coordinateStyle: CSS.Properties = {
     dominantBaseline: "middle",
@@ -83,16 +84,17 @@ const Cell = ({ square }: { square: MazeSquare }) => {
   return (
     <>
       <g>
+        <rect
+          x={westDisplay}
+          y={northDisplay}
+          width={cellSize}
+          height={cellSize}
+          fill={innerColor}
+        />
         {sides.map(({ path, color }) => (
           <path key={path} d={path} fill={color} />
         ))}
-        <rect
-          x={westDisplay + insetSize}
-          y={northDisplay + insetSize}
-          width={innerSize}
-          height={innerSize}
-          fill={innerColor}
-        />
+
         {square.content === undefined && <Cross />}
         <Coordinates />
       </g>

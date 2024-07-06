@@ -10,7 +10,7 @@ const SideType = {
 
 const colors = {
   [SideType.DOOR]: "brown",
-  [SideType.EMPTY]: "white",
+  [SideType.EMPTY]: "none",
   [SideType.SECRET_DOOR]: "purple",
   [SideType.STAIRS_DOWN]: "red",
   [SideType.STAIRS_UP]: "green",
